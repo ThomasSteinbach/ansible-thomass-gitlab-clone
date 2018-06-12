@@ -1,0 +1,10 @@
+- name: clone all repos from gitlab.xarif.de
+  hosts: target
+
+  vars:
+    GITLAB_TOKEN: ufagt6CixVtmL7_JLZLM
+    gitlab_domain: gitlab.xarif.de
+    username: thomass
+
+  roles:
+    - role: ansible-thomass-gitlab-clone
