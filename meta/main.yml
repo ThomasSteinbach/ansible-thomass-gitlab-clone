@@ -1,0 +1,9 @@
+---
+galaxy_info:
+  author: Thomas Steinbach
+  description: Clones all repos from a gitlab user repository
+  license: MIT
+
+dependencies:
+  - src: git+https://gitlab.com/thomassteinbach/ansible-thomass-git.git
+    name: ansible-thomass-git

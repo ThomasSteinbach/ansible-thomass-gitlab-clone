@@ -2,9 +2,9 @@
   hosts: target
 
   vars:
-    GITLAB_TOKEN: ufagt6CixVtmL7_JLZLM
+    GITLAB_TOKEN: 9s8YMFFrREhGDy3wHKDx
     gitlab_domain: gitlab.xarif.de
-    username: thomass
+    username: ansible-clone-test-user
 
   roles:
     - role: ansible-thomass-gitlab-clone
