@@ -31,11 +31,6 @@
     path: "{{ ansible_user_dir }}/{{ gitlab_domain }}/{{ username }}"
     state: directory
 
-- name: debug
-  debug:
-    msg: "{{ item.ssh_url_to_repo }}"
-  with_items: "{{ projectlist }}"
-
 - name: clone repositories
   git:
     repo: "{{ item.ssh_url_to_repo }}"
