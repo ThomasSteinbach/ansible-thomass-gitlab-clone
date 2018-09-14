@@ -1,22 +1,6 @@
-- name: query user
+- name: query users repositories where he is at least developer
   uri:
-    url: "https://{{ gitlab_domain }}/api/v4/users?username={{ username }};private_token={{ GITLAB_TOKEN }}"
-    method: GET
-    return_content: yes
-    timeout: 120
-  register: result
-
-- name: log query
-  debug:
-    var: result.content
-
-- name: extract user id
-  set_fact:
-    userid: "{{ (result.content | from_json)[0].id }}"
-
-- name: query users repositories
-  uri:
-    url: "https://{{ gitlab_domain }}/api/v4/users/{{ userid }}/projects?private_token={{ GITLAB_TOKEN }}"
+    url: "https://{{ gitlab_domain }}/api/v4/projects/min_access_level=30?private_token={{ GITLAB_TOKEN }}"
     method: GET
     return_content: yes
     timeout: 120
@@ -28,11 +12,12 @@
 
 - name: create directory for repo clones
   file:
-    path: "{{ ansible_user_dir }}/{{ gitlab_domain }}/{{ username }}"
+    path: "{{ ansible_user_dir }}/{{ gitlab_domain }}/{{ item.namespace.name }}"
     state: directory
+  with_item: "{{ projectlist }}"
 
 - name: clone repositories
   git:
     repo: "{{ item.ssh_url_to_repo }}"
-    dest: "{{ ansible_user_dir }}/{{ gitlab_domain }}/{{ username }}/{{ item.name }}"
+    dest: "{{ ansible_user_dir }}/{{ gitlab_domain }}/{{ item.path_with_namespace }}"
   with_items: "{{ projectlist }}"
